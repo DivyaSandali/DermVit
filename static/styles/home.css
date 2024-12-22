@@ -1,0 +1,243 @@
+/* Smooth Scrolling Effect */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar Styles */
+.navbar {
+  position: fixed; /* Stay fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  display: flex; /* Flexbox for layout */
+  justify-content: space-between; /* Space between logo and links */
+  align-items: center; /* Align items vertically */
+  background-color: white; /* Navbar background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 10px 50px; /* Padding for top/bottom and sides */
+  z-index: 1000; /* Stay above other content */
+}
+
+/* Navbar Logo */
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333; /* Dark color for logo */
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Navbar Links */
+.nav-links {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Horizontal alignment */
+  gap: 35px; /* Space between links */
+  margin: 0; /* Remove default margin */
+  margin-right: 80px;
+}
+
+.nav-links li a {
+  text-decoration: none; /* Remove underline */
+  font-size: 1rem;
+  color: #333; /* Text color */
+  transition: color 0.3s; /* Smooth color change on hover */
+}
+
+.nav-links li a:hover {
+  color: #7b4a3d; /* Highlight color on hover */
+}
+
+/* Adjust hero section to avoid overlap with navbar */
+.hero {
+  margin-top: 60px; /* Push content below the navbar */
+}
+
+/* Hero Section */
+.hero {
+    height: 75vh;
+    background-image: url('../images/home_banner.png'); /* Replace with the banner image */
+    background-size: cover;
+    background-position: center top;
+    display: flex;
+    color: white;
+  }
+
+  .hero-content {
+    position: absolute; /* Position relative to the hero section */
+    bottom: 116px; /* Distance from the bottom */
+    left: 45px; /* Distance from the left */
+    color: white; /* Make the text white for visibility */
+    text-align: left; /* Align text to the left */
+    z-index: 2; /* Ensure it appears above any overlays */
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .hero-content button {
+    padding: 15px 30px;
+    background-color: #7b4a3d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .upload-button {
+    padding: 10px 20px;
+    background-color: #7b4a3d; /* Button background color */
+    color: white;
+    border: none;
+    border-radius: 15px; /* Rounded edges to match input */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 180px;
+  }
+
+  .upload-button:hover {
+    background-color: #5f372c; /* Darker shade on hover */
+  }
+
+  /* Why DermViT Section */
+  .why-dermvit {
+    text-align: center;
+    padding: 27px 20px;
+    background-color: #F5F4F0;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature {
+    text-align: left;
+    width: 200px;
+  }
+  
+  .feature img {
+    width: 260px;
+    height: 175px;
+    margin-bottom: 5px;
+  }
+
+  .feature p {
+    font-weight: bold;
+    margin-bottom: 5px; /* Reduce space below the bold text */
+    line-height: 1.2; /* Adjust text spacing */
+  }
+  
+  .feature span {
+    font-size: 0.9rem; /* Slightly smaller text if needed */
+    display: block;
+    margin-top: 0; /* Remove default margin above span */
+    letter-spacing: 0.5px; /* Add spacing between letters */
+    line-height: 1.5; /* Increase line height for better readability */
+    color: #444; /* Optional: Slightly darker text for clarity */
+  }
+  
+  /* Skin Diseases Section */
+  .skin-diseases {
+    padding: 30px 20px;
+    text-align: center;
+  }
+  
+  .disease-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .disease {
+    text-align: center;
+    width: 270px;
+  }
+  
+  .disease img {
+    width: 150px;
+    border-radius: 50%;
+  }
+  
+  /* About Us Section */
+  .about-us {
+    display: flex;
+    align-items: left;
+    padding: 25px 50px;
+    background-color: #eeefe9;
+  }
+  
+  .about-content {
+    max-width: 800px; /* Limit content width for better readability */
+    margin: 0 auto; /* Center the content */
+    flex: 1;
+  }
+  
+  .about-image img {
+    width: 600px;
+    height: 700px;
+    border-radius: 10px;
+  }
+
+  .about-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: left; /* Center the heading */
+  }
+  
+  .about-content p {
+    font-size: 1rem;
+    line-height: 1.6; /* Improve line spacing */
+    margin-bottom: 20px; /* Add spacing between paragraphs */
+    color: #333; /* Darker text for readability */
+  }
+  
+  .about-content p:last-child {
+    margin-bottom: 0; /* Remove margin after the last paragraph */
+  }
+  
+  /* FAQ Section */
+  .faq {
+    padding: 20px 20px;
+    background-color: #f9f9f9; /* Light background for better contrast */
+  }
+
+  .faq h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .faq-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd; /* Optional: Adds a light separator */
+    padding-bottom: 10px; /* Space after each item */
+  }
+  
+  .faq-item h3 {
+    cursor: pointer;
+    color: #7b4a3d;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .faq-item p {
+    font-size: 1rem;
+    line-height: 1.8; /* Increased line spacing for better readability */
+    margin-top: 5px;
+    color: #444;
+  }
+  
+  /* Add interactivity for FAQs (optional with CSS) */
+  .faq-item h3:hover + p {
+    display: block;
+  }
+  

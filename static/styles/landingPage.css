@@ -1,0 +1,73 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Full-screen Banner */
+  .banner {
+    height: 100vh; /* Full-screen height */
+    background-image: url('../images/landing_image.png'); /* Updated relative image path */
+    background-size: cover; /* Cover entire screen */
+    background-position: center 15; /* Align the image to the top-center */
+    position: relative;
+  }
+  
+  /* Overlay */
+  .overlay {
+   background-color: rgba(0, 0, 0, 0.1); /* Reduced darkness for a lighter overlay */
+   height: 100%;
+   display: flex;
+   align-items: center; /* Vertically align items */
+   padding-left: 50px; /* Add padding to the left for alignment */
+ }
+
+  /* Text Content */
+  .content {
+    color: #262B31; /* Text color */
+    text-align: left; /* Left-align text */
+    max-width: 500px; /* Optional: Limit the width for better readability */
+  }
+  
+  .content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  /* Button */
+  .cta-button {
+    background-color: #7b4a3d; /* Button color */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 15px; /* Rounded corners */
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+    display: flex; /* Align icon and text */
+    align-items: center; /* Center vertically */
+    gap: 10px; /* Add space between icon and text */
+    text-align: center;
+  }
+
+  .cta-button:hover {
+    background-color: #5f372c; /* Darker on hover */
+  }
+
+  /* Icon */
+  .cta-button .icon {
+    width: 16px; /* Adjust icon size */
+    height: 16px; /* Keep icon size proportional */
+  }
+
+  
+  

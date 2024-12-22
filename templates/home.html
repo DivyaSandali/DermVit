@@ -1,7 +1,143 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head></head>
-  <body>
-    Hiiiiiiiiii
-  </body>
-</html>     
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermViT | Home</title>
+  <link rel="stylesheet" href="../static/styles/home.css">
+</head>
+<body>
+<!-- Navbar Section -->
+<nav class="navbar">
+  <div class="nav-logo">DERMVIT</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#why-dermvit">Why DermViT</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about-us">About Us</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>The future of dermatology is here</h1>
+      <p>Get an accurate diagnosis and treatment plan from the comfort of your home.</p>
+      <div class="upload-section">
+        <input type="file" id="imageUpload" hidden>
+        <button class="upload-button" onclick="document.getElementById('imageUpload').click()">Upload Image</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why DermViT Section -->
+  <section id="why-dermvit" class="why-dermvit">
+    <h2>Why DermViT</h2>
+    <p>Your Trusted Partner in Accurate Skin Disease Detection</p>
+    <div class="features">
+      <div class="feature">
+        <img src="../static/images/fast_detection.png" alt="Fast Detection">
+        <p><strong>Fast detection</strong></p>
+        <span>Get results in seconds, not weeks</span>
+      </div>
+      <div class="feature">
+        <img src="../static/images/accurate_results.png" alt="Accurate Results">
+        <p><strong>Accurate results</strong></p>
+        <span>Our system spots 4 conditions: Enfeksiyonel, Eczema, Benign, and Malignant</span>
+      </div>
+      <div class="feature">
+        <img src="../static/images/reccmendation.png" alt="Accurate Results">
+        <p><strong>Recommendations</strong></p>
+        <span>Gives recommendations based on your skin type</span>
+      </div>
+      <div class="feature">
+        <img src="../static/images/private_secure.png" alt="Accurate Results">
+        <p><strong>Private and Secure</strong></p>
+        <span>We don't store or share your images without your consent</span>
+      </div>
+      <!-- Add more features -->
+    </div>
+  </section>
+
+  <!-- Skin Diseases Section -->
+  <section id="services" class="skin-diseases">
+    <h2>Skin Diseases We Specialize In</h2>
+    <div class="disease-grid">
+      <div class="disease">
+        <img src="../static/images/enfeksiyonel.png" alt="Skin Infection">
+        <h3>Enfeksiyonel (Skin Infections)</h3>
+        <p>Infectious skin diseases caused by bacteria, viruses, fungi, or parasites, leading to conditions like rashes, redness, or irritation.</p>
+      </div>
+      <div class="disease">
+        <img src="../static/images/eczema.png" alt="Eczema">
+        <h3>Eczema</h3>
+        <p>A skin condition that causes redness, itching, dryness, and sometimes swelling. It’s common, not contagious, and can flare up due to triggers like allergens or stress.</p>
+      </div>
+      <div class="disease">
+        <img src="../static/images/benign.png" alt="Benign Tumors">
+        <h3>Benign Tumor</h3>
+        <p>A non-cancerous growth that does not spread to other parts of the body. It’s usually harmless but may require attention if it causes discomfort or other issues.</p>
+      </div>
+      <div class="disease">
+        <img src="../static/images/malign.png" alt="Malign">
+        <h3>Malign Tumor</h3>
+        <p>A cancerous growth that spreads uncontrollably to other parts of the body, potentially becoming life-threatening if not treated promptly</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about-us" class="about-us">
+    <div class="about-content">
+      <h2>About Us</h2>
+      <p>
+        Welcome to <strong>DermViT</strong>, a cutting-edge system developed to help detect skin<br>diseases with accuracy and efficiency. This project focuses on identifying four<br>key conditions: <strong>Infectious skin diseases</strong>, <strong>Eczema</strong>, <strong>Benign tumors</strong>, and<br><strong>Malignant tumors</strong>.
+      </p>
+      <p>
+        <strong>DermViT</strong> leverages advanced artificial intelligence technology to provide<br>reliable and fast predictions, empowering users to take timely action for their<br>skin health. Designed to be user-friendly, this system is here to make skin disease detection accessible and convenient for everyone.
+      </p>
+      <p>
+        Our goal is simple: to support early diagnosis and improve overall skin health through <strong>innovative technology</strong>.
+      </p>
+      <p>
+        At DermViT, we believe that early detection saves lives. By combining<br>state-of-the-art machine learning algorithms and an extensive dataset of dermatological conditions, our system is equipped to analyze images with remarkable precision. This ensures that users receive accurate insights and<br>actionable recommendations for their skin health.
+      </p>
+      <p>
+        Our platform is not only tailored for individual users but also serves as a valuable tool for healthcare professionals. Doctors and dermatologists can leverage DermViT's analysis to supplement their expertise, ensuring more informed<br>decision-making and better patient outcomes.
+      </p>
+    </div>
+    <div class="about-image">
+      <img src="../static/images/about_us.png" alt="About DermViT">
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq">
+    <h2>FAQs</h2>
+    <div class="faq-item">
+      <h3>How can I use DermViT?</h3>
+      <p>Simply upload a clear image of the affected skin area through DermViT’s interface, and the system will analyze it to provide a prediction.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Do I need a dermatologist's diagnosis after using DermViT?</h3>
+      <p> Yes, DermViT is designed as a supportive tool. It’s always recommended to consult a dermatologist for a professional diagnosis and treatment plan.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How can I use DermViT?</h3>
+      <p>Simply upload a clear image of the affected skin area</p>
+    </div>
+    <div class="faq-item">
+      <h3>What kind of skin diseases can DermVit detect?</h3>
+      <p>DermViT is designed to detect four key types of skin diseases: Infectious Skin Diseases (Enfeksiyonel),  Eczema, Benign Tumors and Malignant Tumors</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is DermVit's detection system accurate?</h3>
+      <p>Yes, DermVit's detection system is designed to deliver high accuracy, achieving an overall accuracy of 9248% in identifying skin conditions. Our advanced Vision Transformer (ViT) model is trained on a carefully balanced and enhanced dataset to ensure reliable predictions for the four key skin disease types. While no system is perfect, DermVit prioritizes precision and reliability to provide trustworthy results.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is my data safe with DermViT?</h3>
+      <p>Absolutely. DermVit prioritizes your privacy and data security. Any images or information you provide are processed securely and are not stored or shared. DermVit operates with strict adherence to data protection standards, ensuring that your data is used solely for generating predictions and is promptly discarded after processing. Your privacy is our top priority.</p>
+    </div>
+  </section>
+</body>
+</html>
