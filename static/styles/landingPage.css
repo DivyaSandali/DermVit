@@ -69,5 +69,47 @@
     height: 16px; /* Keep icon size proportional */
   }
 
+  a:link {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+a:active {
+  text-decoration: none;
+  color: white;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333; /* Dark color for logo */
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.navbar {
+  position: fixed; /* Stay fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  display: flex; /* Flexbox for layout */
+  justify-content: space-between; /* Space between logo and links */
+  align-items: center; /* Align items vertically */
+  background-color: white; /* Navbar background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 10px 50px; /* Padding for top/bottom and sides */
+  z-index: 1000; /* Stay above other content */
+}
+
   
   

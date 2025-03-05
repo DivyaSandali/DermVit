@@ -1,143 +1,1160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DermViT | Home</title>
-  <link rel="stylesheet" href="../static/styles/home.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermViT | Home</title>
+    <link rel="stylesheet" href="../static/styles/home.css">
+    <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
 </head>
 <body>
 <!-- Navbar Section -->
 <nav class="navbar">
-  <div class="nav-logo">DERMVIT</div>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#why-dermvit">Why DermViT</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#about-us">About Us</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
+    <div class="nav-logo">DERMVIT</div>
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#why-dermvit">Why DermViT</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about-us">About Us</a></li>
+        <li><a href="#faq">FAQ</a></li>
+    </ul>
 </nav>
-  <!-- Hero Section -->
-  <section id="home" class="hero">
+<!-- Hero Section -->
+<section id="home" class="hero">
     <div class="hero-content">
-      <h1>The future of dermatology is here</h1>
-      <p>Get an accurate diagnosis and treatment plan from the comfort of your home.</p>
-      <div class="upload-section">
-        <input type="file" id="imageUpload" hidden>
-        <button class="upload-button" onclick="document.getElementById('imageUpload').click()">Upload Image</button>
-      </div>
-    </div>
-  </section>
+        <h1>The future of dermatology is here</h1>
+        <p>Get an accurate diagnosis and treatment plan from the comfort of your home.</p>
+        <div class="detection-section">
+            <button class="dermvit-button" onclick="openModal()">Start Diagnosing</button>
+        </div>
 
-  <!-- Why DermViT Section -->
-  <section id="why-dermvit" class="why-dermvit">
+        <!-- Modal Structure -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <div>
+                    <img id="upImg" src="../static/images/upload_img.PNG" alt="Upload Button Image">
+                    <input type="file" id="imageUpload" hidden onchange="previewImage(event)">
+                    <img id="preview" src="" alt="Uploaded Image"
+                         style="display: none; width: 350px; max-height: 250px; margin-top: 10px;">
+                </div>
+                <div class="predict-labels">
+                    <input type="text" id="alert_label" style="border: none; width: 250px"><br/>
+                    <input type="text" id="predict_label" style="border: none; width: 250px">
+                </div>
+                <div class="submit-section">
+                    <button id="upSub" class="dermvit-button" onclick="document.getElementById('imageUpload').click()">Upload Image
+                    </button>
+                    <button class="dermvit-button" onclick="uploadFile()">Submit</button>
+                    <button id="skin-type" class="dermvit-button" onclick="skintype()"
+                            style="display: none;">
+                        Generate Report
+                    </button>
+                </div>
+                <br/>
+            </div>
+        </div>
+
+        <div id="skintypeModal" class="modal">
+            <div class="modal-content-skin">
+                <button id="close-btn" onclick="closeStypeModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <input type="text" id="predict_label_skin" style="border: none; color : #7b4a3d">
+                <br/>
+                <h3>Let’s know your skin type</h3>
+                <br/>
+                <div class="skin-type-section">
+                    <button class="skin-normal" onclick="skinNormal()">
+                        <img src="../static/images/normal_skin.jpg" alt="Skin Normal Button Image"
+                             style="margin-top: 0px;">
+                        <h2>Normal Skin</h2>
+                        <p>Normal skin, is well-balanced.
+                            moisture content, sebum production
+                            and other factors that affect the
+                            health of your skin are all within 
+                            normal ranges.</p>
+                    </button>
+                    <button class="skin-normal" onclick="skinDry()">
+                        <img src="../static/images/dry_skin.jpg" alt="Skin Normal Button Image">
+                        <h2>Dry Skin</h2>
+                        <p>Dry skin lacks moisture and
+                            natural oils, leading to
+                            flakiness and tightness. Hydration is key to keeping it
+                            healthy and comfortable.</p>
+                    </button>
+                    <button class="skin-normal" onclick="skinOily()">
+                        <img src="../static/images/oily_skin.jpg" alt="Skin Normal Button Image">
+                        <h2>Oily Skin</h2>
+                        <p>Oily skin produces excess sebum,
+                            leading to a shiny appearance
+                            and clogged pores. Proper
+                            cleansing helps maintain balance and prevent breakouts.</p>
+                    </button>
+                    <button class="skin-normal" onclick="skinCombination()">
+                        <img src="../static/images/combination_skin.jpg" alt="Skin Normal Button Image">
+                        <h2>Combination Skin</h2>
+                        <p>Combination skin has both
+                            oily and dry areas, usually
+                            with an oily T-zone. Balanced
+                            care is needed to meet its
+                            mixed needs.</p>
+                    </button>
+                </div>
+                <br/>
+                <div class="foot-text">
+                    <p style="color : #7b4a3d;">Find the skin type that suits you to ensure you choose the right aftercare.</p>
+                </div>
+            </div>
+        </div>
+
+        <!--    report views-->
+        <div id="report-normal-eczema" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeNeczModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Ekzama</h3>
+                <h3 style="color: #7b4a3d;">Normal Skin</h3>
+                <div class="dropdown">
+                    <button onclick="n_ecz_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="n_ecz_treat" class="dropdown-content">
+                        <p>
+                            <b>Moisturize Daily:</b>Apply a fragrance-free moisturizer to maintain skin hydration.<br/>
+                            <b>Use Gentle Products:</b> Wash with mild, soap-free cleansers to prevent irritation.<br/>
+                            <b>Control Flare-Ups: </b> Use anti-inflammatory creams like corticosteroids as
+                            prescribed.<br/>
+                            <b>Avoid Triggers:</b> Identify and steer clear of allergens or irritants that worsen
+                            symptoms
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_ecz_med_fun()" class="dropbtn">Medications</button>
+                    <div id="n_ecz_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Corticosteroids:</b>A mild corticosteroid to reduce inflammation and
+                            itching.<br/>
+                            <b>Emollients and Moisturizers: </b> Non-steroidal options like tacrolimus or pimecrolimus
+                            for sensitive areas<br/>
+                            <b>Antihistamines: </b> Oral medications to relieve itching and prevent scratching.<br/>
+                            <b>Topical Calcineurin Inhibitors:</b> Products like salicylic acid or benzoyl peroxide to
+                            manage excess oil (if recommended by a dermatologist).<br/>
+                            <b>Over-the-Counter Hydrating Creams:</b> CeraVe, Eucerin, or Aveeno for regular
+                            hydration.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_ecz_life_fun()" class="dropbtn">Life Adjustments</button>
+                    <div id="n_ecz_life" class="dropdown-content">
+                        <p>
+                            <b>Maintain Skin Hydration:</b> Apply a fragrance-free moisturizer immediately after bathing
+                            to lock in moisture.<br/>
+                            <b>Avoid Triggers:</b> Identify and avoid allergens or irritants like certain soaps,
+                            perfumes, and fabrics (e.g., wool).<br/>
+                            <b>Use Gentle Cleansers:</b>Replace harsh soaps with mild, non-soap cleansers or
+                            hypoallergenic products<br/>
+                            <b>Control Stress Levels:</b> Practice relaxation techniques like meditation or yoga to
+                            reduce eczema flare-ups triggered by stress.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-dry-eczema" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeDeczModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Eczema</h3>
+                <h3 style="color: #7b4a3d;">Dry Skin</h3>
+                <div class="dropdown">
+                    <button onclick="d_ecz_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="d_ecz_treat" class="dropdown-content">
+                        <p>
+                            <b>Intensive Moisturization:</b>Use thick, fragrance-free emollients multiple times a day,
+                            especially after washing hands or bathing
+                            <br/>
+                            <b>Gentle Cleansing:</b>
+                            Opt for soap-free or hypoallergenic cleansers to avoid stripping natural oils
+                            <br/>
+                            <b>Short, Lukewarm Baths:</b>
+                            Limit baths to 5-10 minutes with lukewarm water to retain skin moisture.
+                            <br/>
+                            <b>Protect Skin:</b>
+                            Wear cotton clothing and gloves when exposed to irritants to prevent further dryness or
+                            irritation.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_ecz_med_fun()" class="dropbtn">Medications</button>
+                    <div id="d_ecz_med" class="dropdown-content">
+                        <p>
+                            <b>Hydrocortisone Cream:</b>A mild corticosteroid to reduce inflammation and itching.
+                            <br/>
+                            <b>Ceramide-Based Moisturizers:</b>
+                            To restore the skin barrier and lock in hydration
+                            <br/>
+                            <b>Antihistamines:</b>
+                            To relieve severe itching, especially at night.
+                            <br/>
+                            <b>Prescription Topical Steroids:</b>
+                            For flare-ups, as advised by a dermatologist.
+                            <br/>
+                            <br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_ecz_life_fun()" class="dropbtn">Life Adjustments</button>
+                    <div id="d_ecz_life" class="dropdown-content">
+                        <p>
+                            <b>Use a Humidifier:</b>
+                            Keep indoor air moist to prevent skin from drying out
+                            <br/>
+                            <b>Avoid Hot Showers:</b>Use lukewarm water to prevent stripping natural oils from the skin.
+                            <br/>
+                            <b>Wear Soft, Breathable Fabrics:</b>Avoid wool and synthetic materials that may irritate
+                            the skin.
+                            <br/>
+                            <b>Choose Gentle Skin Products:</b>
+                            Opt for fragrance-free soaps, detergents, and skincare products
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-oily-eczema" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeOeczModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Eczema</h3>
+                <h3 style="color: #7b4a3d;">Oily Skin</h3>
+                <div class="dropdown">
+                    <button onclick="o_ecz_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="o_ecz_treat" class="dropdown-content">
+                        <p>
+                            <b>Use Lightweight Moisturizers:</b> Choose non-comedogenic, water-based moisturizers to
+                            hydrate without clogging pores.
+                            <br/>
+                            <b>Gentle Cleansing:</b>
+                            Wash with a mild, soap-free cleanser to remove excess oil while protecting the skin barrier.
+                            <br/>
+                            <b>Apply Topical Treatments:</b>
+                            Use dermatologist-recommended eczema creams to target inflamed areas.
+                            <br/>
+                            <b>Avoid Heavy Oily Products:</b>
+                            Steer clear of thick creams and greasy ointments that may worsen oiliness.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_ecz_med_fun()" class="dropbtn">Medications</button>
+                    <div id="o_ecz_med" class="dropdown-content">
+                        <p>
+                            <b>Hydrocortisone Cream:</b>A mild corticosteroid to reduce inflammation and itching.
+                            <br/>
+                            <b>Calcineurin Inhibitors:</b>
+                            Non-steroidal options like tacrolimus or pimecrolimus for sensitive areas.
+                            <br/>
+                            <b>Antihistamines:</b>
+                            Oral medications to relieve itching and prevent scratching.
+                            <br/>
+                            <b>Sebum-Control Medications: </b>
+                            Products like salicylic acid or benzoyl peroxide to manage excess oil (if recommended by a
+                            dermatologist).
+                            <br/>
+                            <br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_ecz_life_fun()" class="dropbtn">Life Adjustments</button>
+                    <div id="o_ecz_life" class="dropdown-content">
+                        <p>
+                            <b>Use Oil-Free Moisturizers:</b>
+                            Opt for non-comedogenic, gel-based moisturizers to hydrate without clogging pores.
+                            <br/>
+                            <b>Avoid Harsh Cleansers:</b>Use gentle, soap-free cleansers to clean the skin without
+                            over-stripping natural oils.
+                            <br/>
+                            <b>Limit Overwashing:</b>Wash your face twice daily to control oil without irritating the
+                            skin.
+                            <br/>
+                            <b>Choose Lightweight Sunscreen: </b>
+                            Apply a non-greasy, oil-free sunscreen to protect from UV damage without triggering eczema.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-comb-eczema" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeCOMBeczModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Eczema</h3>
+                <h3 style="color: #7b4a3d;">Combination Skin</h3>
+                <div class="dropdown">
+                    <button onclick="comb_ecz_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="comb_ecz_treat" class="dropdown-content">
+                        <p>
+                            <b>Apply Balancing Moisturizers:</b> Use lightweight, non-comedogenic moisturizers that
+                            hydrate without clogging pores.
+                            <br/>
+                            <b>Target Problem Areas:</b>
+                            Use richer creams on dry patches and lighter products on oily zones.
+                            <br/>
+                            <b>Gentle Cleansing:</b>
+                            Use a mild, pH-balanced cleanser to clean without irritating dry or oily areas.
+                            <br/>
+                            <b>Patch-Specific Care:</b>
+                            Avoid over-treating oily areas while providing extra hydration to dry spots.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="comb_ecz_med_fun()" class="dropbtn">Medications</button>
+                    <div id="comb_ecz_med" class="dropdown-content">
+                        <p>
+                            <b>Hydrocortisone Cream:</b>Apply a mild steroid cream on inflamed or itchy areas as
+                            directed by a healthcare provider.
+                            <br/>
+                            <b>Topical Calcineurin Inhibitors:</b>
+                            Use medications like tacrolimus or pimecrolimus for sensitive areas prone to flare-ups.
+                            <br/>
+                            <b>Non-Greasy Emollients: </b>
+                            Oral medications to relieve itching and prevent scratching.
+                            <br/>
+                            <b>Sebum-Control Medications: </b>
+                            Recommend lightweight medicated moisturizers for hydration without clogging pores.
+                            <br/>
+                            <b>Antihistamines: </b>
+                            Suggest oral antihistamines for itch relief, especially during flare-ups.
+                            <br/>
+                            <br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="comb_ecz_life_fun()" class="dropbtn">Life Adjustments</button>
+                    <div id="comb_ecz_life" class="dropdown-content">
+                        <p>
+                            <b>Balanced Skincare Routine:</b>
+                            Use lightweight, non-comedogenic moisturizers on oily areas and richer creams on drier
+                            parts.
+                            <br/>
+                            <b>
+                                Avoid Harsh Products:</b>Use gentle, soap-free cleansers to clean the skin without
+                            over-stripping natural oils.
+                            <br/>
+                            <b>Mild Cleansing:</b> Cleanse with lukewarm water and use gentle, sulfate-free cleansers to
+                            avoid drying out or irritating the skin.
+                            <br/>
+                            <b>Spot Treatment for Flare-ups: </b>
+                            Apply eczema-specific treatments only to affected areas to prevent over-treatment of healthy
+                            skin.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-normal-enfeksiyonel" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeNenfModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Enfeksiyonel</h3>
+                <h3 style="color: #7b4a3d;">Normal Skin</h3>
+                <div class="dropdown">
+                    <button onclick="n_enf_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="n_enf_treat" class="dropdown-content">
+                        <p>
+                            <b>Clean the Affected Area:</b>Wash gently with mild, antiseptic soap and lukewarm
+                            water.<br/>
+                            <b>Apply Topical Antifungal or Antibacterial Creams:</b> Use prescribed treatments to target
+                            the infection.<br/>
+                            <b>Keep Skin Dry and Clean:</b> Prevent moisture buildup to stop the infection from
+                            spreading.<br/>
+                            <b>Avoid Irritants:</b> Stay away from harsh chemicals, perfumes, or tight clothing that can
+                            aggravate the skin.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_enf_med_fun()" class="dropbtn">Medication</button>
+                    <div id="n_enf_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Antifungal Creams:</b>Clotrimazole, Ketoconazole, or Miconazole for fungal
+                            infections.<br/>
+                            <b>Antibacterial Ointments:</b> Mupirocin or Bacitracin for bacterial infections.<br/>
+                            <b>Oral Antibiotics or Antifungals:</b> Fluconazole or Amoxicillin for severe or widespread
+                            infections (consult a doctor).<br/>
+                            <b>Soothing Anti-Itch Lotions:</b> Calamine lotion or hydrocortisone for relief from itching
+                            and inflammation.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_enf_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="n_enf_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Maintain Proper Hygiene:</b> Wash affected areas with gentle, antimicrobial soap and keep
+                            them dry.<br/>
+                            <b>Avoid Sharing Personal Items:</b> Do not share towels, clothing, or grooming tools to
+                            prevent spreading the infection.<br/>
+                            <b>Wear Breathable Fabrics:</b> Use loose, cotton clothing to reduce irritation and allow
+                            the skin to breathe.<br/>
+                            <b>Boost Immune Health:</b> Stay hydrated, eat a balanced diet rich in fruits and
+                            vegetables, and get adequate sleep to strengthen your immune system.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-dry-enfeksiyonel" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeDenfModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Enfeksiyonel</h3>
+                <h3 style="color: #7b4a3d;">Dry Skin</h3>
+                <div class="dropdown">
+                    <button onclick="d_enf_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="d_enf_treat" class="dropdown-content">
+                        <p>
+                            <b>Gentle Cleansing:</b>Use mild, hydrating cleansers to clean the affected area without
+                            drying out the skin.<br/>
+                            <b>Apply Antifungal or Antibacterial Creams:</b> Choose medicated creams tailored to fight
+                            infections while providing moisture.<br/>
+                            <b>Moisturize Regularly:</b> Use fragrance-free, hydrating lotions to prevent further
+                            dryness and irritation.<br/>
+                            <b>Protect the Skin:</b> Cover the affected area with breathable dressings to prevent
+                            scratching and secondary infections.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_enf_med_fun()" class="dropbtn">Medication</button>
+                    <div id="d_enf_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Antifungal Creams:</b>Such as clotrimazole or miconazole for fungal
+                            infections.<br/>
+                            <b>Antibacterial Ointments:</b> Like mupirocin for bacterial infections.<br/>
+                            <b>Steroid Creams (if prescribed):</b> Low-potency hydrocortisone to reduce inflammation and
+                            itching.<br/>
+                            <b>Oral Antifungal/Antibiotics (if severe):</b> Fluconazole or amoxicillin, based on the
+                            type of infection and medical advice.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_enf_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="d_enf_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Keep Skin Moisturized:</b> Use hypoallergenic, fragrance-free moisturizers regularly to
+                            prevent dryness and cracking.<br/>
+                            <b>Maintain Hygiene:</b> Clean the affected area gently with mild soap and water, and pat
+                            dry without rubbing.<br/>
+                            <b>Wear Breathable Fabrics:</b> Opt for loose-fitting, cotton clothing to reduce irritation
+                            and allow skin to breathe.<br/>
+                            <b>Avoid Irritants:</b> Stay away from harsh soaps, hot water, and allergens that can worsen
+                            skin irritation.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-oily-enfeksiyonel" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeOenfModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Enfeksiyonel</h3>
+                <h3 style="color: #7b4a3d;">Oily Skin</h3>
+                <div class="dropdown">
+                    <button onclick="o_enf_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="o_enf_treat" class="dropdown-content">
+                        <p>
+                            <b>Cleanse Regularly:</b>Use a gentle, antibacterial cleanser to control excess oil and
+                            prevent infection.<br/>
+                            <b>Apply Oil-Free Moisturizers:</b> Choose lightweight, non-comedogenic moisturizers to keep
+                            the skin hydrated without clogging pores.<br/>
+                            <b>Use Medicated Creams:</b> Apply antifungal or antibacterial creams as prescribed to
+                            target the infection.<br/>
+                            <b>Control Oil with Clay Masks:</b> Incorporate oil-absorbing treatments like clay masks to
+                            reduce grease and promote healing..
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_enf_med_fun()" class="dropbtn">Medication</button>
+                    <div id="o_enf_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Antibacterial Creams:</b>Such as mupirocin or fusidic acid to control bacterial
+                            infections.<br/>
+                            <b>Topical Antifungal Agents:</b> Like clotrimazole or ketoconazole for fungal
+                            infections.<br/>
+                            <b>Salicylic Acid-Based Treatments:</b> To reduce oil production and prevent secondary
+                            breakouts.<br/>
+                            <b>Oral Antibiotics:</b> Prescribed for severe infections, such as doxycycline or
+                            erythromycin (only under medical guidance).<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_enf_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="o_enf_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Gentle Cleansing Routine:</b> Use a mild, antibacterial face wash twice daily to control
+                            oil and bacteria.<br/>
+                            <b>Avoid Touching the Skin:</b> Reduce the risk of spreading infections by avoiding frequent
+                            touching or picking at the skin.<br/>
+                            <b>Use Oil-Free Moisturizers:</b> Hydrate the skin without clogging pores, ensuring balance.<br/>
+                            <b>Balanced Diet:</b> Focus on a diet low in processed sugars and high in fruits,
+                            vegetables, and omega-3 fatty acids to support skin health..
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-combination-enfeksiyonel" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closecombenfModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Enfeksiyonel</h3>
+                <h3 style="color: #7b4a3d;">Combination Skin</h3>
+                <div class="dropdown">
+                    <button onclick="comb_enf_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="comb_enf_treat" class="dropdown-content">
+                        <p>
+                            <b>Targeted Cleansing:</b>Use a gentle antibacterial cleanser on the oily areas while
+                            hydrating dry zones with a mild cleanser.<br/>
+                            <b>Balanced Hydration:</b> Apply lightweight, non-comedogenic moisturizers to avoid clogging
+                            pores in oily areas.<br/>
+                            <b>Topical Antibacterial Agents:</b> Use prescribed antibacterial creams or gels on infected
+                            spots.<br/>
+                            <b>Skin-Friendly Sunscreen:</b> Protect your skin with a sunscreen designed for combination
+                            skin to avoid irritation.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="comb_enf_med_fun()" class="dropbtn">Medication</button>
+                    <div id="comb_enf_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Antibiotics:</b>Such as mupirocin or clindamycin cream to target localized
+                            infections.<br/>
+                            <b>Antifungal Creams:</b> For infections caused by fungi, like ketoconazole or clotrimazole.<br/>
+                            <b>Hydrocortisone Cream:</b> A mild corticosteroid to reduce inflammation and redness, if
+                            prescribed.<br/>
+                            <b>Oral Antibiotics:</b> For severe or widespread infections, under a doctor’s
+                            supervision.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="comb_enf_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="comb_enf_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Balanced Skincare Routine:</b> Use a gentle cleanser for oily areas and a hydrating cream
+                            for dry patches to maintain balance.<br/>
+                            <b>Keep Skin Clean:</b> Wash the affected areas twice daily with lukewarm water to prevent
+                            infection spread.<br/>
+                            <b>Avoid Picking or Scratching:</b> To reduce the risk of secondary infections and scarring.<br/>
+                            <b>Wear Breathable Fabrics:</b> Opt for loose-fitting, natural fabrics like cotton to reduce
+                            irritation and allow skin to heal.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-normal-benign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeNbenModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Benign</h3>
+                <h3 style="color: #7b4a3d;">Normal Skin</h3>
+                <div class="dropdown">
+                    <button onclick="n_ben_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="n_ben_treat" class="dropdown-content">
+                        <p>
+                            <b>Routine Monitoring:</b>Regularly check for changes in size, color, or texture of benign
+                            growths.<br/>
+                            <b>Gentle Cleansing:</b> Use a mild, fragrance-free cleanser to maintain healthy skin.<br/>
+                            <b>Moisturization:</b> Apply a light, non-greasy moisturizer to keep skin hydrated without
+                            clogging pores.<br/>
+                            <b>Sun Protection:</b> Use broad-spectrum sunscreen (SPF 30 or higher) to protect skin and
+                            prevent further growth changes.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_ben_med_fun()" class="dropbtn">Medication</button>
+                    <div id="n_ben_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Antibiotics:</b>For minor irritation or infections associated with benign growths
+                            (e.g., bacitracin or mupirocin).<br/>
+                            <b>Hydrocortisone Cream:</b> To reduce redness, itching, or inflammation, if needed.<br/>
+                            <b>Silicone Gel or Sheets:</b> For improving the appearance of certain benign scars or
+                            growths.<br/>
+                            <b>Vitamin C Serums:</b> To enhance skin tone and support overall skin health.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_ben_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="n_ben_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Regular Sunscreen Use:</b> Protect the skin from UV damage to prevent further skin
+                            issues.<br/>
+                            <b>Avoid Picking or Scratching:</b> Prevent irritation or infection by not disturbing benign
+                            growths.<br/>
+                            <b>Hydrate Well:</b> Drink plenty of water and moisturize regularly to maintain healthy
+                            skin.<br/>
+                            <b>Balanced Diet:</b> Consume foods rich in vitamins A, C, and E to support skin
+                            regeneration and health.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-dry-benign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeDbenModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Benign</h3>
+                <h3 style="color: #7b4a3d;">Dry Skin</h3>
+                <div class="dropdown">
+                    <button onclick="d_ben_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="d_ben_treat" class="dropdown-content">
+                        <p>
+                            <b>Intensive Moisturizing:</b> Use thick, fragrance-free moisturizers to hydrate and protect
+                            the skin.<br/>
+                            <b>Gentle Cleansing:</b> Wash with non-drying, soap-free cleansers to avoid stripping
+                            natural oils.<br/>
+                            <b>Humidifier Usage:</b> Add moisture to the air to prevent further skin dryness.<br/>
+                            <b>Targeted Skin Treatments:</b> Apply prescribed creams for specific benign growths as
+                            advised by a doctor.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_ben_med_fun()" class="dropbtn">Medication</button>
+                    <div id="d_ben_med" class="dropdown-content">
+                        <p>
+                            <b>Hydrocortisone Cream:</b>To reduce mild irritation or inflammation.<br/>
+                            <b>Vitamin E Oil:</b> To promote healing and hydration of dry patches.<br/>
+                            <b>Urea-based Creams:</b> To deeply moisturize and soften thickened or scaly skin.<br/>
+                            <b>Antibacterial Ointments:</b> If there are any minor cracks or cuts to prevent
+                            infection.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_ben_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="d_ben_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Use a Humidifier:</b> Maintain moisture in the air to prevent skin dryness.<br/>
+                            <b>Avoid Hot Showers:</b> Use lukewarm water to minimize stripping natural skin oils.<br/>
+                            <b>Hydrate Regularly:</b> Drink plenty of water to keep the skin hydrated from within.<br/>
+                            <b>Moisturize Immediately After Washing:</b> Apply a thick moisturizer to lock in moisture
+                            while the skin is still damp
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-oily-benign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeObenModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Benign</h3>
+                <h3 style="color: #7b4a3d;">Oily Skin</h3>
+                <div class="dropdown">
+                    <button onclick="o_ben_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="o_ben_treat" class="dropdown-content">
+                        <p>
+                            <b>Gentle Cleansing:</b> Use a mild, oil-free cleanser twice daily to remove excess oil
+                            without over-drying.<br/>
+                            <b>Non-Comedogenic Moisturizers:</b> Choose lightweight, gel-based moisturizers to keep skin
+                            hydrated without clogging pores.<br/>
+                            <b>Sun Protection:</b> Apply an oil-free, broad-spectrum sunscreen daily to prevent damage
+                            and irritation.<br/>
+                            <b>Spot Treatments:</b> Use products with salicylic acid or benzoyl peroxide on specific
+                            areas to reduce oil buildup and prevent flare-ups.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_ben_med_fun()" class="dropbtn">Medication</button>
+                    <div id="o_ben_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Retinoids:</b>Help regulate oil production and improve skin texture (e.g.,
+                            Adapalene or Tretinoin).<br/>
+                            <b>Salicylic Acid Creams or Lotions:</b> Reduce oil buildup and prevent clogged pores.<br/>
+                            <b>Niacinamide Gel:</b> Minimizes oil production and soothes inflammation.<br/>
+                            <b>Clindamycin Gel:</b> For localized areas with redness or inflammation due to benign
+                            conditions.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_ben_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="o_ben_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Gentle Cleansing:</b> Use a mild, oil-free cleanser twice daily to prevent excess oil
+                            buildup.<br/>
+                            <b>Non-Comedogenic Products:</b> Opt for skincare and makeup labeled as non-comedogenic to
+                            avoid clogging pores.<br/>
+                            <b>Regular Exfoliation:</b> Use a gentle exfoliator 1-2 times a week to remove dead skin
+                            cells and excess oil.<br/>
+                            <b>Balanced Diet:</b> Reduce intake of oily or greasy foods and incorporate more fruits,
+                            vegetables, and omega-3-rich foods.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-combination-benign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeCombenModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Benign</h3>
+                <h3 style="color: #7b4a3d;">Combination Skin</h3>
+                <div class="dropdown">
+                    <button onclick="com_ben_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="com_ben_treat" class="dropdown-content">
+                        <p>
+                            <b>Targeted Cleansing:</b> Use a mild cleanser for your entire face, and apply a gentle
+                            exfoliant only to oily areas.<br/>
+                            <b>Hydrate Strategically:</b> Use a lightweight moisturizer for oily zones and a richer
+                            cream for dry areas.<br/>
+                            <b>Spot Treatment:</b> Apply specific treatments like soothing gels or creams only on the
+                            affected areas.<br/>
+                            <b>Protect with Sunscreen:</b> Use a broad-spectrum sunscreen to protect all skin areas
+                            evenly from UV damage.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="com_ben_med_fun()" class="dropbtn">Medication</button>
+                    <div id="com_ben_med" class="dropdown-content">
+                        <p>
+                            <b>Hydrocortisone Cream:</b> To reduce inflammation and soothe irritated areas.<br/>
+                            <b>Salicylic Acid Gel:</b> For spot treatment on oily zones to manage clogged pores.<br/>
+                            <b>Ceramide-based Moisturizers:</b> For dry patches, helping to restore the skin
+                            barrier.<br/>
+                            <b>Non-comedogenic Sunscreen:</b> To prevent further irritation and protect from harmful UV
+                            rays.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="com_ben_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="com_ben_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Use a Balanced Skincare Routine:</b> Incorporate products suitable for combination skin,
+                            like lightweight moisturizers for oily areas and richer creams for dry patches.<br/>
+                            <b>Avoid Overwashing:</b> Cleanse twice a day with a gentle, pH-balanced cleanser to prevent
+                            stripping the skin of natural oils.<br/>
+                            <b>Focus on Hydration:</b> Drink plenty of water to maintain overall skin health and improve
+                            the skin’s natural barrier.<br/>
+                            <b>Spot Treat Strategically:</b> Use targeted treatments like salicylic acid for oily areas
+                            and calming creams for dry or irritated patches.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-normal-malign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeNMalModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Malign</h3>
+                <h3 style="color: #7b4a3d;">Normal Skin</h3>
+                <div class="dropdown">
+                    <button onclick="n_mal_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="n_mal_treat" class="dropdown-content">
+                        <p>
+                            <b>Immediate Medical Consultation:</b> Encourage users to consult a dermatologist or
+                            oncologist without delay for a professional evaluation.<br/>
+                            <b>Biopsy or Imaging Tests:</b> Recommend diagnostic tests to confirm malignancy and assess
+                            its stage.<br/>
+                            <b>Customized Treatment Plan:</b> Suggest discussing options like surgical removal,
+                            chemotherapy, or radiation therapy with a medical professional.<br/>
+                            <b>Skin Monitoring:</b> Advise regular skin checks and follow-ups to monitor for any changes
+                            or recurrence.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_mal_med_fun()" class="dropbtn">Medication</button>
+                    <div id="n_mal_med" class="dropdown-content">
+                        <p>
+                            <b>Immunotherapy Drugs:</b> Medications like Pembrolizumab (Keytruda) or Nivolumab to boost
+                            the immune system's ability to fight cancer cells.<br/>
+                            <b>Chemotherapy Agents:</b>Suggest drugs like Cisplatin or Doxorubicin as part of a doctor's
+                            prescribed treatment plan.<br/>
+                            <b>Targeted Therapy:</b> Include medications like Vemurafenib (Zelboraf) for specific
+                            genetic mutations in tumors.<br/>
+                            <b>Pain Management:</b> Over-the-counter or prescribed pain relievers like Ibuprofen or
+                            Acetaminophen for symptom relief.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="n_mal_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="n_mal_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Healthy Diet:</b> Emphasize a balanced diet rich in fruits, vegetables, whole grains, and
+                            lean proteins to boost immunity and energy levels.<br/>
+                            <b>Sun Protection:</b> Use broad-spectrum sunscreen daily and wear protective clothing to
+                            minimize UV exposure, which can aggravate the condition.<br/>
+                            <b>Stress Management:</b> Practice mindfulness, yoga, or meditation to reduce stress and
+                            improve mental well-being during treatment.<br/>
+                            <b>Regular Check-ups:</b> Encourage routine follow-ups with healthcare providers for
+                            monitoring and managing the condition effectively.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-dry-malign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeDMalModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Malign</h3>
+                <h3 style="color: #7b4a3d;">Dry Skin</h3>
+                <div class="dropdown">
+                    <button onclick="d_mal_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="d_mal_treat" class="dropdown-content">
+                        <p>
+                            <b>Moisturization:</b> Apply dermatologist-recommended rich moisturizers to keep the skin
+                            hydrated and reduce dryness.<br/>
+                            <b>Hydrating Cleansers:</b> Use gentle, hydrating cleansers to avoid further drying out the
+                            skin.<br/>
+                            <b>Barrier Repair:</b> Incorporate ceramide-based creams to strengthen the skin
+                            barrier.<br/>
+                            <b>Avoid Irritants:</b> Stay away from harsh skincare products and environments that can
+                            aggravate dryness.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_mal_med_fun()" class="dropbtn">Medication</button>
+                    <div id="d_mal_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Chemotherapy:</b> Creams like 5-fluorouracil (5-FU) for early-stage malignant
+                            lesions.<br/>
+                            <b>Moisturizing Ointments:</b> Prescriptions with urea or hyaluronic acid to combat dryness
+                            and maintain skin health during treatment.<br/>
+                            <b>Pain Management:</b> Over-the-counter analgesic creams like lidocaine for localized pain
+                            relief.<br/>
+                            <b>Oral Medications:</b> Specific cancer-fighting drugs like immunomodulators or targeted
+                            therapies (as prescribed by a specialist).<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="d_mal_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="d_mal_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Stay Hydrated:</b> Drink plenty of water to keep your skin hydrated and reduce
+                            dryness.<br/>
+                            <b>Moisturize Regularly:</b> Use rich, fragrance-free moisturizers designed for sensitive or
+                            dry skin.<br/>
+                            <b>Sun Protection:</b> Apply broad-spectrum sunscreen (SPF 30 or higher) daily and wear
+                            protective clothing to minimize UV exposure.<br/>
+                            <b>Healthy Diet:</b> Focus on foods rich in antioxidants, like fruits and vegetables, to
+                            support overall skin health and recovery.<br/>
+                            <b>Stress Management:</b> Practice relaxation techniques like meditation or gentle yoga to
+                            reduce stress, which can impact healing.<br/>
+                            <b>Avoid Harsh Products:</b> Stay away from soaps or skincare products with alcohol or
+                            strong fragrances that can irritate dry skin.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-oily-malign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeOMalModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Malign</h3>
+                <h3 style="color: #7b4a3d;">Oily Skin</h3>
+                <div class="dropdown">
+                    <button onclick="o_mal_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="o_mal_treat" class="dropdown-content">
+                        <p>
+                            <b>Gentle Cleansing:</b> Use a mild, oil-free cleanser twice daily to remove excess oil
+                            without over-drying.<br/>
+                            <b>Non-Comedogenic Moisturizers:</b> Choose lightweight, gel-based moisturizers to keep skin
+                            hydrated without clogging pores.<br/>
+                            <b>Sun Protection:</b> Apply an oil-free, broad-spectrum sunscreen daily to prevent damage
+                            and irritation.<br/>
+                            <b>Spot Treatments:</b> Use products with salicylic acid or benzoyl peroxide on specific
+                            areas to reduce oil buildup and prevent flare-ups.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_mal_med_fun()" class="dropbtn">Medication</button>
+                    <div id="o_mal_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Chemotherapy Creams:</b> Prescribe options like 5-fluorouracil (5-FU) or
+                            Imiquimod for small surface-level tumors.<br/>
+                            <b>Oral Retinoids:</b> Low-dose isotretinoin to control oil production and reduce
+                            inflammation.<br/>
+                            <b>Anti-Cancer Drugs:</b> Medications like Capecitabine for specific cases under medical
+                            supervision.<br/>
+                            <b>Pain Relief:</b> Topical or oral pain relievers like Ibuprofen gel for symptom
+                            management.<br/>
+                            <b>Antibiotic Gels:</b> To manage infection risks around affected areas.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="o_mal_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="o_mal_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Gentle Skincare Routine:</b> Use non-comedogenic, oil-free cleansers and moisturizers to
+                            keep the skin clean and hydrated without clogging pores.<br/>
+                            <b>UV Protection:</b> Apply broad-spectrum sunscreen with SPF 50+ daily to prevent further
+                            damage from harmful UV rays.<br/>
+                            <b>Dietary Adjustments:</b> Incorporate anti-inflammatory foods like green leafy vegetables,
+                            berries, and fatty fish to support skin health.<br/>
+                            <b>Avoid Harsh Products:</b> Stay away from oily, fragranced, or alcohol-based products that
+                            can irritate the skin.<br/>
+                            <b>Regular Check-Ups:</b> Encourage frequent visits to a dermatologist to monitor skin
+                            changes and manage symptoms early.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div id="report-combination-malign" class="modal">
+            <div class="modal-content-necz">
+                <button class="close-btn" onclick="closeComMalModal()"
+                        style="border: none; background: white; cursor: pointer;">
+                    <i class="fa fa-times" style="font-family: inherit;">x</i>
+                </button>
+                <h3 style="color: #7b4a3d;">Prediction : Malign</h3>
+                <h3 style="color: #7b4a3d;">Combination Skin</h3>
+                <div class="dropdown">
+                    <button onclick="com_mal_treat_fun()" class="dropbtn">Treatment Plan</button>
+                    <div id="com_mal_treat" class="dropdown-content">
+                        <p>
+                            <b>Customized Skincare:</b> Use products designed for combination skin, such as lightweight,
+                            non-greasy moisturizers to hydrate dry areas and balance oil production in oily zones.<br/>
+                            <b>Regular Cleansing:</b> Cleanse twice daily with a gentle, pH-balanced cleanser to remove
+                            impurities without over-drying or irritating.<br/>
+                            <b>Targeted Treatments:</b> Apply spot treatments or prescribed medications to specific
+                            areas as recommended by a healthcare provider.<br/>
+                            <b>Sun Protection:</b> Use a broad-spectrum sunscreen with SPF 50+, focusing on both oily
+                            and dry areas to prevent UV damage.
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="com_mal_med_fun()" class="dropbtn">Medication</button>
+                    <div id="com_mal_med" class="dropdown-content">
+                        <p>
+                            <b>Topical Chemotherapy Creams:</b> Fluorouracil (5-FU) or Imiquimod for localized treatment
+                            of surface lesions.<br/>
+                            <b>Oral Medications:</b> Targeted therapies or immune modulators as prescribed by a
+                            healthcare provider.<br/>
+                            <b>Pain Management:</b> Analgesics like ibuprofen or acetaminophen to manage discomfort
+                            associated with the condition.<br/>
+                            <b>Antibiotics:</b> If there are secondary infections, prescribed antibiotics may be needed.<br/><br/>
+                            <b>** Consult a dermatologist before starting any medications **</b>
+                        </p>
+                    </div>
+                    <br/>
+                    <button onclick="com_mal_life_adju_fun()" class="dropbtn">Lifestyle Adjustments</button>
+                    <div id="com_mal_life_adju" class="dropdown-content">
+                        <p>
+                            <b>Sun Protection:</b> Use a broad-spectrum sunscreen (SPF 30+) daily and avoid prolonged
+                            sun exposure.<br/>
+                            <b>Balanced Skincare:</b> Use gentle, non-irritating cleansers and moisturizers suitable for
+                            combination skin.<br/>
+                            <b>Regular Skin Checks:</b> Perform monthly self-examinations and consult a dermatologist
+                            regularly for early detection of changes.<br/>
+                            <b>Healthy Diet:</b> Focus on a diet rich in antioxidants, vitamins, and omega-3 fatty acids
+                            to support skin health.<br/>
+                            <b>Stress Management:</b> Practice relaxation techniques like yoga or meditation to maintain
+                            overall health and immunity.
+                        </p>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why DermViT Section -->
+<section id="why-dermvit" class="why-dermvit">
     <h2>Why DermViT</h2>
     <p>Your Trusted Partner in Accurate Skin Disease Detection</p>
     <div class="features">
-      <div class="feature">
-        <img src="../static/images/fast_detection.png" alt="Fast Detection">
-        <p><strong>Fast detection</strong></p>
-        <span>Get results in seconds, not weeks</span>
-      </div>
-      <div class="feature">
-        <img src="../static/images/accurate_results.png" alt="Accurate Results">
-        <p><strong>Accurate results</strong></p>
-        <span>Our system spots 4 conditions: Enfeksiyonel, Eczema, Benign, and Malignant</span>
-      </div>
-      <div class="feature">
-        <img src="../static/images/reccmendation.png" alt="Accurate Results">
-        <p><strong>Recommendations</strong></p>
-        <span>Gives recommendations based on your skin type</span>
-      </div>
-      <div class="feature">
-        <img src="../static/images/private_secure.png" alt="Accurate Results">
-        <p><strong>Private and Secure</strong></p>
-        <span>We don't store or share your images without your consent</span>
-      </div>
-      <!-- Add more features -->
+        <div class="feature">
+            <img src="../static/images/fast_detection.png" alt="Fast Detection">
+            <p><strong>Fast detection</strong></p>
+            <span>Get results in seconds, not weeks</span>
+        </div>
+        <div class="feature">
+            <img src="../static/images/accurate_results.png" alt="Accurate Results">
+            <p><strong>Accurate results</strong></p>
+            <span>Our system spots 4 conditions: Enfeksiyonel, Eczema, Benign, and Malignant</span>
+        </div>
+        <div class="feature">
+            <img src="../static/images/reccmendation.png" alt="Accurate Results">
+            <p><strong>Recommendations</strong></p>
+            <span>Gives recommendations based on your skin type</span>
+        </div>
+        <div class="feature">
+            <img src="../static/images/private_secure.png" alt="Accurate Results">
+            <p><strong>Private and Secure</strong></p>
+            <span>We don't store or share your images without your consent</span>
+        </div>
+        <!-- Add more features -->
     </div>
-  </section>
+</section>
 
-  <!-- Skin Diseases Section -->
-  <section id="services" class="skin-diseases">
+<!-- Skin Diseases Section -->
+<section id="services" class="skin-diseases">
     <h2>Skin Diseases We Specialize In</h2>
     <div class="disease-grid">
-      <div class="disease">
-        <img src="../static/images/enfeksiyonel.png" alt="Skin Infection">
-        <h3>Enfeksiyonel (Skin Infections)</h3>
-        <p>Infectious skin diseases caused by bacteria, viruses, fungi, or parasites, leading to conditions like rashes, redness, or irritation.</p>
-      </div>
-      <div class="disease">
-        <img src="../static/images/eczema.png" alt="Eczema">
-        <h3>Eczema</h3>
-        <p>A skin condition that causes redness, itching, dryness, and sometimes swelling. It’s common, not contagious, and can flare up due to triggers like allergens or stress.</p>
-      </div>
-      <div class="disease">
-        <img src="../static/images/benign.png" alt="Benign Tumors">
-        <h3>Benign Tumor</h3>
-        <p>A non-cancerous growth that does not spread to other parts of the body. It’s usually harmless but may require attention if it causes discomfort or other issues.</p>
-      </div>
-      <div class="disease">
-        <img src="../static/images/malign.png" alt="Malign">
-        <h3>Malign Tumor</h3>
-        <p>A cancerous growth that spreads uncontrollably to other parts of the body, potentially becoming life-threatening if not treated promptly</p>
-      </div>
+        <div class="disease">
+            <img src="../static/images/enfeksiyonel.png" alt="Skin Infection">
+            <h3>Enfeksiyonel (Skin Infections)</h3>
+            <p>Infectious skin diseases caused by bacteria, viruses, fungi, or parasites, leading to conditions like
+                rashes, redness, or irritation.</p>
+        </div>
+        <div class="disease">
+            <img src="../static/images/eczema.png" alt="Eczema">
+            <h3>Eczema</h3>
+            <p>A skin condition that causes redness, itching, dryness, and sometimes swelling. It’s common, not
+                contagious, and can flare up due to triggers like allergens or stress.</p>
+        </div>
+        <div class="disease">
+            <img src="../static/images/benign.png" alt="Benign Tumors">
+            <h3>Benign Tumor</h3>
+            <p>A non-cancerous growth that does not spread to other parts of the body. It’s usually harmless but may
+                require attention if it causes discomfort or other issues.</p>
+        </div>
+        <div class="disease">
+            <img src="../static/images/malign.png" alt="Malign">
+            <h3>Malign Tumor</h3>
+            <p>A cancerous growth that spreads uncontrollably to other parts of the body, potentially becoming
+                life-threatening if not treated promptly</p>
+        </div>
     </div>
-  </section>
+</section>
 
-  <!-- About Us Section -->
-  <section id="about-us" class="about-us">
+<!-- About Us Section -->
+<section id="about-us" class="about-us">
     <div class="about-content">
-      <h2>About Us</h2>
-      <p>
-        Welcome to <strong>DermViT</strong>, a cutting-edge system developed to help detect skin<br>diseases with accuracy and efficiency. This project focuses on identifying four<br>key conditions: <strong>Infectious skin diseases</strong>, <strong>Eczema</strong>, <strong>Benign tumors</strong>, and<br><strong>Malignant tumors</strong>.
-      </p>
-      <p>
-        <strong>DermViT</strong> leverages advanced artificial intelligence technology to provide<br>reliable and fast predictions, empowering users to take timely action for their<br>skin health. Designed to be user-friendly, this system is here to make skin disease detection accessible and convenient for everyone.
-      </p>
-      <p>
-        Our goal is simple: to support early diagnosis and improve overall skin health through <strong>innovative technology</strong>.
-      </p>
-      <p>
-        At DermViT, we believe that early detection saves lives. By combining<br>state-of-the-art machine learning algorithms and an extensive dataset of dermatological conditions, our system is equipped to analyze images with remarkable precision. This ensures that users receive accurate insights and<br>actionable recommendations for their skin health.
-      </p>
-      <p>
-        Our platform is not only tailored for individual users but also serves as a valuable tool for healthcare professionals. Doctors and dermatologists can leverage DermViT's analysis to supplement their expertise, ensuring more informed<br>decision-making and better patient outcomes.
-      </p>
+        <h2>About Us</h2>
+        <p>
+            Welcome to <strong>DermViT</strong>, a cutting-edge system developed to help detect skin<br>diseases with
+            accuracy and efficiency. This project focuses on identifying four<br>key conditions: <strong>Infectious skin
+            diseases</strong>, <strong>Eczema</strong>, <strong>Benign tumors</strong>, and<br><strong>Malignant
+            tumors</strong>.
+        </p>
+        <p>
+            <strong>DermViT</strong> leverages advanced artificial intelligence technology to provide<br>reliable and
+            fast predictions, empowering users to take timely action for their<br>skin health. Designed to be
+            user-friendly, this system is here to make skin disease detection accessible and convenient for everyone.
+        </p>
+        <p>
+            Our goal is simple: to support early diagnosis and improve overall skin health through <strong>innovative
+            technology</strong>.
+        </p>
+        <p>
+            At DermViT, we believe that early detection saves lives. By combining<br>state-of-the-art machine learning
+            algorithms and an extensive dataset of dermatological conditions, our system is equipped to analyze images
+            with remarkable precision. This ensures that users receive accurate insights and<br>actionable
+            recommendations for their skin health.
+        </p>
+        <p>
+            Our platform is not only tailored for individual users but also serves as a valuable tool for healthcare
+            professionals. Doctors and dermatologists can leverage DermViT's analysis to supplement their expertise,
+            ensuring more informed<br>decision-making and better patient outcomes.
+        </p>
     </div>
     <div class="about-image">
-      <img src="../static/images/about_us.png" alt="About DermViT">
+        <img src="../static/images/about_us.png" alt="About DermViT">
     </div>
-  </section>
+</section>
 
-  <!-- FAQ Section -->
-  <section id="faq" class="faq">
+<!-- FAQ Section -->
+<section id="faq" class="faq">
     <h2>FAQs</h2>
     <div class="faq-item">
-      <h3>How can I use DermViT?</h3>
-      <p>Simply upload a clear image of the affected skin area through DermViT’s interface, and the system will analyze it to provide a prediction.</p>
+        <h3>How can I use DermViT?</h3>
+        <p>Simply upload a clear image of the affected skin area through DermViT’s interface, and the system will
+            analyze it to provide a prediction.</p>
     </div>
     <div class="faq-item">
-      <h3>Do I need a dermatologist's diagnosis after using DermViT?</h3>
-      <p> Yes, DermViT is designed as a supportive tool. It’s always recommended to consult a dermatologist for a professional diagnosis and treatment plan.</p>
+        <h3>Do I need a dermatologist's diagnosis after using DermViT?</h3>
+        <p> Yes, DermViT is designed as a supportive tool. It’s always recommended to consult a dermatologist for a
+            professional diagnosis and treatment plan.</p>
     </div>
     <div class="faq-item">
-      <h3>How can I use DermViT?</h3>
-      <p>Simply upload a clear image of the affected skin area</p>
+        <h3>How can I use DermViT?</h3>
+        <p>Simply upload a clear image of the affected skin area</p>
     </div>
     <div class="faq-item">
-      <h3>What kind of skin diseases can DermVit detect?</h3>
-      <p>DermViT is designed to detect four key types of skin diseases: Infectious Skin Diseases (Enfeksiyonel),  Eczema, Benign Tumors and Malignant Tumors</p>
+        <h3>What kind of skin diseases can DermVit detect?</h3>
+        <p>DermViT is designed to detect four key types of skin diseases: Infectious Skin Diseases (Enfeksiyonel),
+            Eczema, Benign Tumors and Malignant Tumors</p>
     </div>
     <div class="faq-item">
-      <h3>Is DermVit's detection system accurate?</h3>
-      <p>Yes, DermVit's detection system is designed to deliver high accuracy, achieving an overall accuracy of 9248% in identifying skin conditions. Our advanced Vision Transformer (ViT) model is trained on a carefully balanced and enhanced dataset to ensure reliable predictions for the four key skin disease types. While no system is perfect, DermVit prioritizes precision and reliability to provide trustworthy results.</p>
+        <h3>Is DermVit's detection system accurate?</h3>
+        <p>Yes, DermVit's detection system is designed to deliver high accuracy, achieving an overall accuracy of 9248%
+            in identifying skin conditions. Our advanced Vision Transformer (ViT) model is trained on a carefully
+            balanced and enhanced dataset to ensure reliable predictions for the four key skin disease types. While no
+            system is perfect, DermVit prioritizes precision and reliability to provide trustworthy results.</p>
     </div>
     <div class="faq-item">
-      <h3>Is my data safe with DermViT?</h3>
-      <p>Absolutely. DermVit prioritizes your privacy and data security. Any images or information you provide are processed securely and are not stored or shared. DermVit operates with strict adherence to data protection standards, ensuring that your data is used solely for generating predictions and is promptly discarded after processing. Your privacy is our top priority.</p>
+        <h3>Is my data safe with DermViT?</h3>
+        <p>Absolutely. DermVit prioritizes your privacy and data security. Any images or information you provide are
+            processed securely and are not stored or shared. DermVit operates with strict adherence to data protection
+            standards, ensuring that your data is used solely for generating predictions and is promptly discarded after
+            processing. Your privacy is our top priority.</p>
     </div>
-  </section>
+</section>
+<script src="../static/js/dermvit.js"></script>
 </body>
 </html>
